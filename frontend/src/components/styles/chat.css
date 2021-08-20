@@ -6,6 +6,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    box-shadow: 8px 14px 45px -3px rgba(0,0,0,0.75);
 }
 
 .chat-title {
@@ -97,16 +98,24 @@
     border-radius: 10px;
 }
 
-span {
-    color: #17D5D1;
-    width: 100%;
-    text-align: center;
-}
-
 .me {
     background-color: #17D5D1;
 }
 
 .notif {
     display: inline-block;
+    color: #17D5D1;
+    width: 100%;
+    text-align: center;
+}
+
+@media only screen and (max-width: 1100px){
+    .chat {
+        margin-top: 60px;
+        width: 60%;
+    }
+
+    .player {
+        width: 90%;
+    }
 }

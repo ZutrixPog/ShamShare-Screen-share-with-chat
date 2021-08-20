@@ -3,6 +3,7 @@ import Peer from 'peerjs';
 import { useSelector, useDispatch } from 'react-redux';
 import './styles/player.css';
 import { disconnect } from '../redux/slicers/socketSlicer';
+import liveLogo from '../live.png';
 
 let peer = null;
 
@@ -10,8 +11,10 @@ export default function Player(props) {
     const video = useRef(null);
     const [io] = useState(useSelector((state) => state.socket.value));
     const [initiate] = useState(new URLSearchParams(props.location.search).get('streamer'));
+    const [visible, setVisible] = useState(false);
     const dispatch = useDispatch();
     const name = useSelector(state => state.name.value);
+    const id = props.match.params.id;
 
     function getUserMedia() {
         return navigator.mediaDevices.getDisplayMedia({
@@ -25,24 +28,29 @@ export default function Player(props) {
     } 
     
     function clearVid() {
+        setVisible(true);
         video.current.removeAttribute('srcObject');
         video.current.load();
     }
-    
-    useEffect(() => {
-        const id = props.match.params.id;
 
+    // I know i could use functions here but for whatever reason it didnt work??
+    useEffect(() => {
         if (initiate){
+            setVisible(true)
             peer = new Peer(id);
             peer.on('open', () => {
                 io.emit('join', {id: id, peerid: id, name: name})
                 getUserMedia().then(stream => {
+                    setVisible(false);
                     video.current.srcObject = stream;
                     video.current.play();
-                    console.log(stream)
+                    peer.on('call', call => {
+                        console.log('called')
+                        call.answer(stream);
+                    });
                     io.on('user-connected', ({peerid}) => {
                         peer.call(peerid, stream);
-                    });
+                    })
                     stream.oninactive = () => {
                         io.emit('disconnected', id);
                         clearVid();
@@ -58,7 +66,6 @@ export default function Player(props) {
                     call.on('stream', stream => {
                         video.current.srcObject = stream;
                         video.current.play();
-                        console.log(video.current.srcObject);
                     });
                 });
                 console.log(peer._id)
@@ -69,24 +76,24 @@ export default function Player(props) {
                 console.log(err);
             });
         }
-
+        
         io.on('disconnected', () => {
             clearVid();
             console.log('disconnected')
         });
 
-        console.log(`User with id ${peer._id} connected!`);
-       
         return () => {
             dispatch(disconnect());
         };
 
-    }, [props.match.params.id, io, initiate, video, dispatch, name]);
+    }, [id, io, initiate, video, dispatch, name]);
     
     return (
         <div class="player">
-            <div class="title"><h3>Salam</h3> <img id="live" src="./live.png"/></div>          
-            <video ref={video} autoPlay muted/>      
+            <div class="title"><h3>Salam</h3> <img id="live" src={liveLogo}/></div>          
+            <video ref={video} autoPlay muted/> 
+            <h2 id='inform' style={{opacity: visible ? 1 : 0}} >Please reload to Start Stream!</h2> 
+            <div className='code'>Your Stream Code: {id} <button id="copy" onClick={() => { navigator.clipboard.writeText(id) }}/></div>    
         </div>
     )
 }

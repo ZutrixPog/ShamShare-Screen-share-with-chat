@@ -8,6 +8,7 @@ export default function Chat(props) {
     const [value, setValue] = useState(null);
     const chat = useRef(null);
     const myname = useSelector((state) => state.name.value);
+    const id = props.match.params.id;
 
     useEffect(() => {
         io.on('message-received', ({name, msg}) => {
@@ -15,7 +16,7 @@ export default function Chat(props) {
         });
 
         io.on('user-connected', ({name}) => {
-            chat.current.innerHTML += `<span id="notif">${name} connected!</span>`
+            chat.current.innerHTML += `<span class="notif">${name} connected!</span>`
         });
     });
 
@@ -25,7 +26,6 @@ export default function Chat(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        const id = props.match.params.id;
         setMessages([...messages, {name: myname, msg: value}]);
         io.emit('message', {id: id, msg: value, name: myname});
         console.log(value)
@@ -37,7 +37,7 @@ export default function Chat(props) {
             <div class="chat-body" ref={chat}>
             { messages.map(({name, msg}) => 
                 <div class={name === myname ? "bubble you" : "bubble you me"}>
-                    <span style={{color: 'pink'}}>{name}: </span>{ msg }
+                    <span style={{color: 'black'}}>{name}: </span>{ msg }
                 </div>
             )}
             </div>

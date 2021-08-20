@@ -4,6 +4,7 @@
     border-radius: 10px;
     background-color: #404a4a;
     position: relative;
+    box-shadow: 8px 14px 45px -3px rgba(0,0,0,0.75);
 }
 
 video {
@@ -52,4 +53,30 @@ h3 {
 
 canvas {
     display: none;
+}
+
+#inform {
+    color: #fff;
+    position: absolute;
+    top: 40%;
+    left: 35%;
+}
+
+.code {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #404a4a;
+    border-radius: 10px;
+    color: #fddf46;
+    padding: 0 10px;
+}
+
+#copy {
+    width: 5%;
+    background-image: url(https://img.icons8.com/material-outlined/16/000000/copy.png);
+    background-repeat:   no-repeat;
+    background-position: center center;
+    margin: 5px 0;
 }
