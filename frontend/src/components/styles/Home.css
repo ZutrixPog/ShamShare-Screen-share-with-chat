@@ -1,0 +1,104 @@
+.home {
+    width: 28%;
+    height: 30vh;
+    border-radius: 10px;
+    background-color: #404a4a;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    color: #17D5D1;
+    letter-spacing: 0.1em;
+}
+
+button {
+    background-color: #17D5D1;
+    border-radius: 10px;
+    width: 40%;
+    height: 30px;
+    border: none;
+    margin-top: 10px;
+    display: inline-block;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: 1em;
+    -webkit-appearance: none;
+    appearance: none;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+    box-shadow: 0 2px 25px rgba(23, 213, 209, 0.5);
+    outline: none;
+}
+
+button:hover { 
+    box-shadow: 0px 15px 25px -5px rgba(darken(dodgerblue, 40%));
+    transform: scale(1.03);
+}
+button:active {
+    box-shadow: 0px 4px 8px rgba(darken(dodgerblue, 30%));
+    transform: scale(.98);
+}
+
+.name-input {
+    width: 60%;
+    resize: none;
+    background: none;
+    border-radius: 10px;
+    border-color: #17D5D1;
+    margin-bottom: 20px;
+    color: #17D5D1;
+    outline: none;
+    transition-property: width, color; 
+    transition-duration: 0.3s; 
+    transition-timing-function: ease-out; 
+}
+
+.name-input:hover {
+    width: 70%;
+    transition: all 0.3s ease-out;
+}
+
+.name-input:focus {
+    border-color: #fddf46;
+    transition: all 0.3s ease-out;
+}
+
+textarea::placeholder {
+    color: #17D5D1;  
+}
+
+.name-input:focus::placeholder {
+    color:#fddf46;
+    transition: all 0.3s;
+}
+
+@keyframes topBubbles {
+    0%{
+      background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
+    }
+      50% {
+        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;}
+   100% {
+      background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
+    background-size: 0% 0%, 0% 0%,  0% 0%,  0% 0%,  0% 0%,  0% 0%;
+    }
+  }
+  
+@keyframes bottomBubbles {
+    0%{
+      background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
+    }
+    50% {
+      background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;}
+   100% {
+      background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
+    background-size: 0% 0%, 0% 0%,  0% 0%,  0% 0%,  0% 0%,  0% 0%;
+    }
+}
